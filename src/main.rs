@@ -38,8 +38,8 @@ fn main() {
     let tr = model.get_x_best()[1];
     let delta_n_ini = (PM / PE1).asin();
     println!(
-        "Parâmetros finais: tab: {:.4}s, tr: {:.4}s, delta_n_ini: {:.6} rad",
-        tab, tr, delta_n_ini
+        "Parâmetros finais: tab: {:.4}s, tr: {:.4}s, delta_n_ini: {:.6} rad -> {:.4}°",
+        tab, tr, delta_n_ini, delta_n_ini.to_degrees()
     );
     let (tempos_finais, angulos_finais, velocidades_finais, cra_final, crr_final) = sim_pet_time(
         PE1,

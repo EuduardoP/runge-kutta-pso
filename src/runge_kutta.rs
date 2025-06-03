@@ -1,10 +1,6 @@
 use std::f64::consts::PI;
-// implementação do Runge Kutta
 
-const F: f64 = 60.0; // Frequência em Hz
-const H: f64 = 9.0; // 
-const PM: f64 = 0.9; // Potência mecânica
-
+use crate::values::*;
 // Implementação do Runge Kutta com termo de amortecimento D
 pub fn runge_kutta_with_d(
     delta_w_ini: f64,
@@ -13,22 +9,22 @@ pub fn runge_kutta_with_d(
     delta_t: f64,
     d: f64,
 ) -> (f64, f64) {
-    let m = H; // Mantendo a inércia como H
+    let m = H / (PI * F); // Mantendo a inércia como H
 
     let k1 = delta_w_ini * delta_t;
     let l1 =
-        (PI * F / m) * (PM - pe * delta_n_ini.sin()) * delta_t - (d / m) * delta_w_ini * delta_t;
+        (1.0 / m) * (PM - pe * delta_n_ini.sin()) * delta_t - (d / m) * delta_w_ini * delta_t;
 
     let k2 = (delta_w_ini + 0.5 * l1) * delta_t;
-    let l2 = (PI * F / m) * (PM - pe * (delta_n_ini + 0.5 * k1).sin()) * delta_t
+    let l2 = (1.0 / m) * (PM - pe * (delta_n_ini + 0.5 * k1).sin()) * delta_t
         - (d / m) * (delta_w_ini + 0.5 * l1) * delta_t;
 
     let k3 = (delta_w_ini + 0.5 * l2) * delta_t;
-    let l3 = (PI * F / m) * (PM - pe * (delta_n_ini + 0.5 * k2).sin()) * delta_t
+    let l3 = (1.0 / m) * (PM - pe * (delta_n_ini + 0.5 * k2).sin()) * delta_t
         - (d / m) * (delta_w_ini + 0.5 * l2) * delta_t;
 
     let k4 = (delta_w_ini + l3) * delta_t;
-    let l4 = (PI * F / m) * (PM - pe * (delta_n_ini + k3).sin()) * delta_t
+    let l4 = (1.0 / m) * (PM - pe * (delta_n_ini + k3).sin()) * delta_t
         - (d / m) * (delta_w_ini + l3) * delta_t;
 
     let delta_w = delta_w_ini + (l1 + 2.0 * l2 + 2.0 * l3 + l4) / 6.0;
