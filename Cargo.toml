@@ -1,0 +1,9 @@
+[package]
+name = "time_runge_kutta"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+indicatif = "0.17.11"
+plotters = "0.3.7"
+pso-rs = "2.2.4"
