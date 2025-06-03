@@ -1,11 +1,11 @@
 === INICIANDO PSO ===
-Resultado do PSO [tab,tr]:[0.14999982460632036, 0.3465464383358462]
+Resultado do PSO [tab,tr]:[0.14999955862909856, 0.30568433412122065]
 
 === SIMULAÇÃO FINAL ===
-Parâmetros finais: tab: 0.1500s, tr: 0.3465s, delta_n_ini: 0.903433 rad -> 51.7629°
+Parâmetros finais: tab: 0.1500s, tr: 0.3057s, delta_n_ini: 0.903433 rad -> 51.7629°
 Resultados da simulação final:
 CRA: 58.9731° | 1.029275 rad -> tab: 0.1500s
-CRR: 85.4853° | 1.492001 rad -> tr: 0.3465s
+CRR: 85.4853° | 1.492001 rad -> tr: 0.3057s
 
 === MÉTODO DAS ÁREAS IGUAIS ===
 Áreas calculadas (método melhorado):
@@ -18,4 +18,4 @@ Gráfico de ângulos e velocidades gerado com sucesso!
 Gráfico de CRA/CRR vs ângulo gerado com sucesso!
 
 === FIM DA EXECUÇÃO ===
-Tempo total de execução: 345.87ms
+Tempo total de execução: 4.05s
