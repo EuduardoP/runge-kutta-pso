@@ -1,6 +1,7 @@
 mod area;
 mod objective_function;
 mod plot;
+mod pso_config;
 mod runge_kutta;
 mod sim_per_time;
 mod values;
@@ -8,7 +9,8 @@ mod values;
 use area::calcular_areas_melhorado;
 use objective_function::objective_function;
 use plot::{abrir_imagem, plotar_angulos_velocidades, plotar_curva_potencia};
-use pso_rs::{pso::PSO, *};
+use pso_config::pso_config;
+use pso_rs::pso::PSO;
 use sim_per_time::sim_pet_time;
 use std::time::Instant;
 use values::*;
@@ -16,22 +18,10 @@ use values::*;
 fn main() {
     let inicio = Instant::now();
 
-    let config = Config {
-        dimensions: vec![2],
-        bounds: vec![(0.149999, 0.1500001), (0.15, 5.0)],
-        c1: 2.05,
-        c2: 2.05,
-        population_size: 10000,
-        t_max: 100000,
-        ..Config::default()
-    };
-
-    fn terminate(f_best: f64) -> bool {
-        f_best < 1e-6
-    }
+    let (config, terminate) = pso_config();
 
     println!("=== INICIANDO PSO ===");
-    let pso: PSO = match pso_rs::run(config, objective_function, Some(terminate)) {
+    let pso: PSO = match pso_rs::run(config, objective_function, terminate) {
         Ok(pso_result) => pso_result,
         Err(e) => {
             println!("Erro ao executar PSO: {}", e);
@@ -44,8 +34,8 @@ fn main() {
 
     // *** SIMULAÇÃO FINAL ***
     println!("\n=== SIMULAÇÃO FINAL ===");
-    let tab = 0.15;
-    let tr = 0.3;
+    let tab = model.get_x_best()[0];
+    let tr = model.get_x_best()[1];
     let delta_n_ini = (PM / PE1).asin();
     println!(
         "Parâmetros finais: tab: {:.4}s, tr: {:.4}s, delta_n_ini: {:.6} rad",

@@ -344,7 +344,20 @@ pub fn plotar_curva_potencia(
 }
 
 pub fn abrir_imagem(caminho: &str) {
-    let _ = Command::new("cmd")
-        .args(&["/C", "start", "", caminho])
-        .spawn();
+    #[cfg(target_os = "windows")]
+    {
+        let _ = Command::new("cmd")
+            .args(&["/C", "start", "", caminho])
+            .spawn();
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        let _ = Command::new("xdg-open").arg(caminho).spawn();
+    }
+
+    #[cfg(target_os = "macos")]
+    {
+        let _ = Command::new("open").arg(caminho).spawn();
+    }
 }
