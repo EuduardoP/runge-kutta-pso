@@ -18,6 +18,8 @@ use std::io::Write;
 use std::time::Instant;
 use values::*;
 
+use crate::area::debug_valores;
+
 fn main() {
     let inicio = Instant::now();
 
@@ -103,6 +105,7 @@ fn main() {
         DELTA_T,
     );
 
+    debug_valores(PE1, PE2, PE3, PM, cra_final, crr_final);
     let resultados_msg = format!(
         "Resultados da simulação final:\nCRA: {:.4}° | {:.6} rad -> tab: {:.4}s\nCRR: {:.4}° | {:.6} rad -> tr: {:.4}s\n",
         cra_final.to_degrees(),
