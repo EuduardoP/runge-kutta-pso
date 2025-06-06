@@ -8,8 +8,9 @@ pub fn plotar_angulos_velocidades(
     angulos: &[f64],
     velocidades: &[f64],
     nome_arquivo: &str,
+    t_max_plot: f64,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let root = BitMapBackend::new(nome_arquivo, (1200, 800)).into_drawing_area();
+    let root = BitMapBackend::new(nome_arquivo, (800, 600)).into_drawing_area();
     root.fill(&WHITE)?;
 
     // Dividir em dois subplots
@@ -25,7 +26,7 @@ pub fn plotar_angulos_velocidades(
             .x_label_area_size(50)
             .y_label_area_size(60)
             .build_cartesian_2d(
-                tempos[0]..tempos[tempos.len() - 1],
+                tempos[0]..t_max_plot,
                 angulos.iter().fold(f64::INFINITY, |a, &b| a.min(b))
                     ..angulos.iter().fold(f64::NEG_INFINITY, |a, &b| a.max(b)),
             )?;
@@ -55,7 +56,7 @@ pub fn plotar_angulos_velocidades(
             .x_label_area_size(50)
             .y_label_area_size(60)
             .build_cartesian_2d(
-                tempos[0]..tempos[tempos.len() - 1],
+                tempos[0]..t_max_plot,
                 velocidades.iter().fold(f64::INFINITY, |a, &b| a.min(b))
                     ..velocidades.iter().fold(f64::NEG_INFINITY, |a, &b| a.max(b)),
             )?;
@@ -111,11 +112,11 @@ pub fn plotar_curva_potencia(
     crr: f64, // Limite superior de critério de estabilidade
     nome_arquivo: &str,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let root = BitMapBackend::new(nome_arquivo, (1200, 800)).into_drawing_area();
+    let root = BitMapBackend::new(nome_arquivo, (800, 600)).into_drawing_area();
     root.fill(&WHITE)?;
 
     // Dados de ângulo
-    let num_pontos = 1000;
+    let num_pontos = 10_000;
     let angulos_rad: Vec<f64> = (0..=num_pontos)
         .map(|i| (i as f64 / num_pontos as f64) * PI)
         .collect();

@@ -23,9 +23,9 @@ pub fn objective_function(p: &Particle, _flat_dim: usize, _dimensions: &Vec<usiz
 
     crr = crr.min(PI);
     let (area1, area2, area3) = calcular_areas_melhorado(PE1, PE2, PE3, PM, cra, crr);
-    let equal_area_method = ((area1 + area2) - area3).abs();
-    if (area1 + area2) > area3 {
-        return 1e6; // Penalização se a área de aceleração for maior
-    }
-    equal_area_method
+
+    let erro = ((area1 + area2) - area3).powi(4); // Erro quadrático para otimização fina
+    let penalidade = if (area1 + area2) > area3 { 1e10 } else { 1.0 };
+
+    erro * penalidade
 }

@@ -14,7 +14,7 @@ pub fn calcular_areas_melhorado(
     let delta_m_rad = intersecoes_pe1.1;
 
     // Usando integração por Simpson ou Trapézio com mais pontos
-    let num_pontos = 1_000_000; // Aumentar precisão
+    let num_pontos = 10_000; // Aumentar precisão
 
     // ÁREA 1: Entre delta_n_ini e CRA, Integrate[pm-pe2,{x,delta_n_ini,cra}]
     let area1 = integrar_simpson(delta_n_ini_rad, cra, num_pontos, |x| {

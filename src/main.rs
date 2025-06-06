@@ -18,8 +18,6 @@ use std::io::Write;
 use std::time::Instant;
 use values::*;
 
-use crate::area::debug_valores;
-
 fn main() {
     let inicio = Instant::now();
 
@@ -66,6 +64,25 @@ fn main() {
 
     let (config, terminate) = pso_config();
 
+    let ini_msg = format!(
+        "=== INICIANDO EXECUÇÃO ===\n\
+        Parâmetros:\n\
+        - Pasta de saída: {}\n\
+        - Configuração PSO: {:#?}\n\
+        - Valores iniciais:\n\
+        - PM: {:.4} Nm\n\
+        - PE1: {:.5} Nm\n\
+        - PE2: {:.5} Nm\n\
+        - PE3: {:.5} Nm\n\
+        - F: {:.2} Hz\n\
+        - H: {:.2} s\n\
+        - D: {:.2}\n\
+        - DELTA_W_INI: {:.4} rad/s\n\
+        - T_MAX: {:.4} s\n\
+        - DELTA_T: {:.6} s\n",
+        pasta_saida, config, PM, PE1, PE2, PE3, F, H, D, DELTA_W_INI, T_MAX, DELTA_T
+    );
+    escrever(&ini_msg);
     escrever("=== INICIANDO PSO ===\n");
     let pso: PSO = match pso_rs::run(config, objective_function, terminate) {
         Ok(pso_result) => pso_result,
@@ -92,6 +109,7 @@ fn main() {
         delta_n_ini,
         delta_n_ini.to_degrees()
     );
+
     escrever(&parametros_msg);
     let (tempos_finais, angulos_finais, velocidades_finais, cra_final, crr_final) = sim_pet_time(
         PE1,
@@ -104,10 +122,9 @@ fn main() {
         T_MAX,
         DELTA_T,
     );
-
-    debug_valores(PE1, PE2, PE3, PM, cra_final, crr_final);
+    // debug_valores(PE1, PE2, PE3, PM, cra_final, crr_final);
     let resultados_msg = format!(
-        "Resultados da simulação final:\nCRA: {:.4}° | {:.6} rad -> tab: {:.4}s\nCRR: {:.4}° | {:.6} rad -> tr: {:.4}s\n",
+        "Resultados da simulação final:\nCRA: {:.4}° / {:.6} rad -> tab: {:.4}s\nCRR: {:.4}° / {:.6} rad -> tr: {:.4}s\n",
         cra_final.to_degrees(),
         cra_final,
         tab,
@@ -142,6 +159,7 @@ fn main() {
         &angulos_finais,
         &velocidades_finais,
         &caminho_simulacao,
+        T_MAX,
     ) {
         let erro_msg = format!("Erro ao plotar ângulos e velocidades: {}\n", e);
         escrever(&erro_msg);
