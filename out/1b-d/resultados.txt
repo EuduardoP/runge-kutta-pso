@@ -1,21 +1,60 @@
+=== INICIANDO EXECUÇÃO ===
+Parâmetros:
+- Pasta de saída: out/1b-d
+- Configuração PSO: Config {
+    dimensions: [
+        2,
+    ],
+    population_size: 1000,
+    neighborhood_type: Lbest,
+    rho: 2,
+    alpha: 0.1,
+    c1: 2.05,
+    c2: 2.05,
+    lr: 0.5,
+    bounds: [
+        (
+            0.15,
+            0.1500000001,
+        ),
+        (
+            0.15,
+            5.0,
+        ),
+    ],
+    t_max: 10000000,
+    progress_bar: true,
+    parallelize: true,
+}
+- Valores iniciais:
+- PM: 1.0700 Nm
+- PE1: 1.83333 Nm
+- PE2: 0.50924 Nm
+- PE3: 0.61111 Nm
+- F: 60.00 Hz
+- H: 9.00 s
+- D: 0.15
+- DELTA_W_INI: 0.0000 rad/s
+- T_MAX: 5.0000 s
+- DELTA_T: 0.000500 s
 === INICIANDO PSO ===
-Resultado do PSO [tab,tr]:[0.1500000664605467, 0.3662228174184582]
+Resultado do PSO [tab,tr]:[0.15000000009239367, 0.44355334131485835]
 
 === SIMULAÇÃO FINAL ===
-Parâmetros finais: tab: 0.1500s, tr: 0.3662s, delta_n_ini: 0.623201 rad -> 35.7068°
+Parâmetros finais: tab: 0.1500s, tr: 0.4436s, delta_n_ini: 0.623201 rad -> 35.7068°
 Resultados da simulação final:
-CRA: 50.5127° | 0.881612 rad -> tab: 0.1500s
-CRR: 80.5520° | 1.405897 rad -> tr: 0.3662s
+CRA: 44.5941° / 0.778313 rad -> tab: 0.1500s
+CRR: 86.9423° / 1.517429 rad -> tr: 0.4436s
 
 === MÉTODO DAS ÁREAS IGUAIS ===
 Áreas calculadas (método melhorado):
-Área 1: 0.1868, Área 2: 0.2727, Área 3: 0.5993
+Área 1: 0.1151, Área 2: 0.3883, Área 3: 0.5155
 
-Diferença das áreas: 0.1398
+Diferença das áreas: 0.0121
 
 === GERANDO GRÁFICOS ===
 Gráfico de ângulos e velocidades gerado com sucesso!
 Gráfico de CRA/CRR vs ângulo gerado com sucesso!
 
 === FIM DA EXECUÇÃO ===
-Tempo total de execução: 3.40s
+Tempo total de execução: 359.08ms
