@@ -24,7 +24,7 @@ pub fn objective_function(p: &Particle, _flat_dim: usize, _dimensions: &Vec<usiz
     crr = crr.min(PI);
     let (area1, area2, area3) = calcular_areas_melhorado(PE1, PE2, PE3, PM, cra, crr);
 
-    let erro = ((area1 + area2) - area3).powi(4); // Erro quadrático para otimização fina
+    let erro = ((area1 + area2) - area3).powi(2); // Erro quadrático para otimização fina
     let penalidade = if (area1 + area2) > area3 { 1e10 } else { 1.0 };
 
     erro * penalidade

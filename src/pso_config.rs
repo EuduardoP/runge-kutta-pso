@@ -7,7 +7,6 @@ pub fn pso_config() -> (Config, Option<fn(f64) -> bool>) {
         c1: 2.05,                                        // Coeficiente cognitivo
         c2: 2.05,                                        // Coeficiente social
         population_size: 1000,                           // Tamanho da população
-        t_max: 10000000,                                 // Número máximo de iterações
         ..Config::default()
     };
 
