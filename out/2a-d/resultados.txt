@@ -27,10 +27,10 @@ Parâmetros:
     parallelize: true,
 }
 - Valores iniciais:
-- PM: 0.9000 Nm
-- PE1: 1.83333 Nm
-- PE2: 1.13491 Nm
-- PE3: 0.00000 Nm
+- PM: 0.9000 p.u.
+- PE1: 1.83333 p.u.
+- PE2: 1.13491 p.u.
+- PE3: 0.00000 p.u.
 - F: 60.00 Hz
 - H: 9.00 s
 - D: 0.15
