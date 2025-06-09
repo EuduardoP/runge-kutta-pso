@@ -19,14 +19,19 @@ use std::time::Instant;
 use values::*;
 
 fn main() {
-    let inicio = Instant::now();
+    let init = Instant::now();
 
     // Capturar argumentos da linha de comando
     let args: Vec<String> = env::args().collect();
 
+    // CORREÇÃO: Inverter a lógica - should_open_images deve ser false quando --no-print está presente
+    let should_open_images =
+        !(args.contains(&"--no-print".to_string()) || args.contains(&"-np".to_string()));
+
     if args.len() < 2 {
-        eprintln!("Uso: {} <nome_da_pasta>", args[0]);
+        eprintln!("Uso: {} <nome_da_pasta> [--no-print|-np]", args[0]);
         eprintln!("Exemplo: cargo run -- a1");
+        eprintln!("Exemplo (sem abrir imagens): cargo run -- a1 --no-print");
         return;
     }
 
@@ -40,6 +45,9 @@ fn main() {
     }
 
     println!("Saída será salva em: {}/", pasta_saida);
+    if !should_open_images {
+        println!("Modo --no-print ativado: imagens não serão abertas automaticamente");
+    }
 
     // Criar arquivo de resultados
     let caminho_resultado = format!("{}/resultados.txt", pasta_saida);
@@ -70,10 +78,10 @@ fn main() {
         - Pasta de saída: {}\n\
         - Configuração PSO: {:#?}\n\
         - Valores iniciais:\n\
-        - PM: {:.4} Nm\n\
-        - PE1: {:.5} Nm\n\
-        - PE2: {:.5} Nm\n\
-        - PE3: {:.5} Nm\n\
+        - PM: {:.4} p.u.\n\
+        - PE1: {:.5} p.u.\n\
+        - PE2: {:.5} p.u.\n\
+        - PE3: {:.5} p.u.\n\
         - F: {:.2} Hz\n\
         - H: {:.2} s\n\
         - D: {:.2}\n\
@@ -165,7 +173,10 @@ fn main() {
         escrever(&erro_msg);
     } else {
         escrever("Gráfico de ângulos e velocidades gerado com sucesso!\n");
-        abrir_imagem(&caminho_simulacao);
+        // CORREÇÃO: Usar should_open_images diretamente
+        if should_open_images {
+            abrir_imagem(&caminho_simulacao);
+        }
     }
 
     if let Err(e) =
@@ -175,12 +186,15 @@ fn main() {
         escrever(&erro_msg);
     } else {
         escrever("Gráfico de CRA/CRR vs ângulo gerado com sucesso!\n");
-        abrir_imagem(&caminho_potencia);
+        // CORREÇÃO: Usar should_open_images diretamente
+        if should_open_images {
+            abrir_imagem(&caminho_potencia);
+        }
     }
 
-    let fim = inicio.elapsed();
+    let end: std::time::Duration = init.elapsed();
     escrever("\n=== FIM DA EXECUÇÃO ===\n");
-    let tempo_msg = format!("Tempo total de execução: {:.2?}\n", fim);
+    let tempo_msg = format!("Tempo total de execução: {:.2?}\n", end);
     escrever(&tempo_msg);
 
     // Garantir que tudo seja escrito no arquivo
