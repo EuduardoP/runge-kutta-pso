@@ -97,6 +97,25 @@ cargo run -- teste1
 
 Isso criará uma pasta `out/teste1/` com todos os resultados.
 
+3. **Execução sem abertura automática de imagens**:
+
+Para gerar os gráficos sem abri-los automaticamente, use a flag `--no-print`:
+
+```bash
+cargo run -- <nome_da_pasta> --no-print
+```
+
+**Exemplo:**
+```bash
+cargo run -- teste1 --no-print
+```
+
+Esta opção é útil para:
+- Execuções em batch/automáticas
+- Servidores sem interface gráfica
+- Processamento de múltiplos casos
+- Integração com scripts
+
 ### Estrutura de Saída
 
 O programa gera os seguintes arquivos na pasta `out/<nome_da_pasta>/`:
@@ -134,7 +153,7 @@ O programa gera os seguintes arquivos na pasta `out/<nome_da_pasta>/`:
 ### Áreas Iguais
 - **Área 1 + Área 2**: Energia de aceleração disponível
 - **Área 3**: Energia de desaceleração necessária
-- **Estabilidade**: Sistema estável quando Área1 + Área2 ≥ Área3
+- **Estabilidade**: Sistema estável quando Área1 + Área2 = Área3
 
 ### Pontos Críticos
 - **CRA (Critical Relay Angle)**: Ângulo no momento da abertura do religador
@@ -165,8 +184,12 @@ O programa gera os seguintes arquivos na pasta `out/<nome_da_pasta>/`:
 
 ```bash
 # Configurar parâmetros em values.rs e pso_config.rs
-# Executar simulação
+
+# Executar simulação (com abertura automática de imagens)
 cargo run -- caso_teste_1
+
+# Executar simulação sem abrir imagens
+cargo run -- caso_teste_1 --no-print
 
 # Os resultados estarão em:
 # - out/caso_teste_1/resultados.txt
